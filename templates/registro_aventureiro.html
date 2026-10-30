@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SQL RPG</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+
+</head>
+<body>
+<main class="container">
+    <section class="painel">
+        <div class="row">
+
+            <!-- DIÁLOGOS -->
+            <div class="card col-6 m-4 p-4">
+
+                <!-- CONTEXTO -->
+                <div class="row">
+                    <div class="col-2 text-end">
+                        <img width="50" height="50" class="mt-4" src="{{ url_for('static', filename='narrador.png') }}"/>
+                    </div>
+                    <div class="col-7 m-2 card theme-primary">
+                        <strong>Narrador:</strong>
+                        Você chega na guilda e vai até a <br>recepcionista para se registrar.
+                    </div>
+                </div>
+            
+                <!-- MISSÃO -->
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-7 m-2 card theme-primary text-end">
+                        <strong>Recepcionista:</strong>
+                        Cadastre seu personagem com nome<br> e nível na tabela aventureiro.
+                    </div>
+                    <div class="col-2 text-start">
+                        <img width="50" height="50" class="mt-4" src="{{ url_for('static', filename='recepcionista.png') }}"/>
+                    </div>
+                </div>
+
+                <!-- DICA -->
+                <div class="row">
+                    <div class="col-2 text-end">
+                        <img width="50" height="50" class="mt-4" src="{{ url_for('static', filename='narrador.png') }}"/>
+                    </div>
+                    <div class="col-7 m-2 card theme-primary">
+                        <strong>DICA:</strong>
+                        INSERT INTO tabela (atributo) VALUES (valor);
+                    </div>
+                </div>
+            </div>
+            <div class="col-5">
+                <form method="POST" action="/registrar_aventureiro" class="row">
+                    <textarea class="form-control mt-3" name="sql" rows="8" placeholder="Digite seu SQL aqui..." >{{ sql or '' }}</textarea>
+                    <button class="theme-success btn-solid mt-3" type="submit">Executar</button>
+                </form>
+                <!-- MENSAGEM DE ERRO/SUCESSO -->
+                {% if mensagem %}
+                    {% if sucesso %}
+                        <div class="alert theme-success m-2" role="alert">
+                            <p>{{mensagem}}</p>
+                        </div>
+                    {% else %}
+                        <div class="alert theme-warning m-2" role="alert">
+                            <p>{{mensagem}}</p>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+
+        
+    </section>
+
+    
+    
+    {% if dados is defined %}
+    <section class="painel">
+        <h2>📊 Resultado da consulta</h2>
+        {% if dados %}
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        {% for coluna in colunas %}
+                        <th>
+                            {{ coluna }}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in dados %}
+                    <tr>
+                        {% for valor in linha %}
+                        <td>
+                            {{ valor }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>
+            ⚠️ A consulta não retornou registros.
+        </p>
+        {% endif %}
+    </section>
+    {% endif %}
+</main>
+</body>
+</html>

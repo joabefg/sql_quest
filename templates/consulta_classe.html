@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SQL RPG</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+</head>
+<body>
+<main class="container">
+    <section class="painel">
+        <p>
+            Parabéns aventureiro, você foi registrado na guilda.
+            Porém verificamos que falta informar a sua classe.
+            Verifique se existe nos nos nossos registros a sua classe.
+        </p>
+        <h2>Missão</h2>
+        <p>
+            Consultar na tabela classe quais as classes disponíveis.
+        </p>
+    </section>
+
+    <section class="painel">
+        <h3> Dica: </h3>
+
+        <pre>SELECT * FROM tabela;</pre>
+
+        <form method="POST" action="/consultar_classe" >
+            <textarea name="sql" rows="8" placeholder="Digite seu SQL aqui..." >{{ sql or '' }}</textarea>
+            <button type="submit">Executar</button>
+        </form>
+    </section>
+    {% if mensagem %}
+    <section class=" mensagem
+            {% if sucesso %}
+                sucesso
+            {% else %}
+                erro
+            {% endif %} " >
+        {{ mensagem }}
+    </section>
+    {% endif %}
+    {% if dados is defined %}
+    <section class="painel">
+        <h2>📊 Resultado da consulta</h2>
+        {% if dados %}
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        {% for coluna in colunas %}
+                        <th>
+                            {{ coluna }}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in dados %}
+                    <tr>
+                        {% for valor in linha %}
+                        <td>
+                            {{ valor }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>
+            ⚠️ A consulta não retornou registros.
+        </p>
+        {% endif %}
+    </section>
+    {% endif %}
+</main>
+</body>
+</html>

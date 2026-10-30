@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro - SQL RPG</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <main class="container">
+        <h1>🧙 Cadastro do Aventureiro</h1>
+
+        <p>
+            Você chegou no centro da Guilda e precisa se registrar.
+            A atendente pede para você registrar seu nome e nível. 
+        </p>
+
+        <hr>
+
+        <h2>Missão:</h2>
+
+        <p>
+            Escreva um comando SQL utilizando
+            <strong>INSERT</strong> para se cadastrar.
+        </p>
+
+        <form method="POST" action="/cadastrar">
+
+            <label for="sql">
+                Digite seu SQL:
+            </label>
+
+            <textarea
+                id="sql"
+                name="sql"
+                placeholder="INSERT INTO ..."
+                rows="8"
+            >{{ sql or '' }}</textarea>
+
+            <button type="submit">
+                ⚔️ Executar SQL
+            </button>
+
+        </form>
+
+        {% if mensagem %}
+
+            <div class="mensagem
+                {% if sucesso %}
+                    sucesso
+                {% else %}
+                    erro
+                {% endif %}
+            ">
+
+                {{ mensagem }}
+
+            </div>
+
+        {% endif %}
+
+    </main>
+
+</body>
+
+</html>

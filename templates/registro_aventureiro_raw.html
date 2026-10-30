@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SQL RPG</title>
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='style.css') }}"
+    >
+    <link 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" 
+        rel="stylesheet" integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
+
+</head>
+<body>
+<main class="container">
+    <section class="painel">
+        <p>
+            Você chega na guilda e vai até a recepcionista para se registrar_aventureiro
+        </p>
+        <h2>Missão</h2>
+        <p>
+            Cadastrar seu personagem com nome e nível na tabela aventureiro.
+        </p>
+    </section>
+
+    <section class="painel">
+        <h3> Dica: </h3>
+
+        <pre>INSERT INTO tabela (atributo) VALUES (valor);</pre>
+
+        <form method="POST" action="/registrar_aventureiro" >
+            <textarea name="sql" rows="8" placeholder="Digite seu SQL aqui..." >{{ sql or '' }}</textarea>
+            <button type="submit">Executar</button>
+        </form>
+    </section>
+    {% if mensagem %}
+    <section class=" mensagem
+            {% if sucesso %}
+                sucesso
+            {% else %}
+                erro
+            {% endif %} " >
+        {{ mensagem }}
+    </section>
+    {% endif %}
+    {% if dados is defined %}
+    <section class="painel">
+        <h2>📊 Resultado da consulta</h2>
+        {% if dados %}
+        <div class="tabela-container">
+            <table>
+                <thead>
+                    <tr>
+                        {% for coluna in colunas %}
+                        <th>
+                            {{ coluna }}
+                        </th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for linha in dados %}
+                    <tr>
+                        {% for valor in linha %}
+                        <td>
+                            {{ valor }}
+                        </td>
+                        {% endfor %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <p>
+            ⚠️ A consulta não retornou registros.
+        </p>
+        {% endif %}
+    </section>
+    {% endif %}
+</main>
+</body>
+</html>

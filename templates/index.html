@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>SQL RPG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <p class="introducao">
+            Bem-vindo, aventureiro!
+        </p>
+        <p>
+            O reino precisa de novos heróis.
+            Antes de começar sua aventura,
+            você precisa se cadastrar em uma guilda.
+        </p>
+
+        <div class="historia">
+            <p>
+                👑 O Rei está procurando aventureiros
+                capazes de enfrentar perigos,
+                explorar masmorras e salvar o reino.
+            </p>
+            <p>
+                Para começar, você deverá aprender
+                a conversar com o banco de dados
+                utilizando SQL.
+            </p>
+        </div>
+        <a href="/registro_aventureiro">
+            <button>
+                ⚔️ Começar aventura
+            </button>
+        </a>
+    </main>
+</body>
+</html>
