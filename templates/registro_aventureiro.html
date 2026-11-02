@@ -15,28 +15,30 @@
 
 </head>
 <body>
-<main class="container">
+<main 
+    class="container min-vh-100" 
+    style="background-image: url('{{ url_for('static',filename='background.jpg') }}'); background-size: cover;">
     <section class="painel">
         <div class="row">
 
             <!-- DIÁLOGOS -->
-            <div class="card col-6 m-4 p-4">
+            <div class="col-6 p-4">
 
                 <!-- CONTEXTO -->
-                <div class="row">
+                <div class="row p-4">
                     <div class="col-2 text-end">
                         <img width="50" height="50" class="mt-4" src="{{ url_for('static', filename='narrador.png') }}"/>
                     </div>
-                    <div class="col-7 m-2 card theme-primary">
+                    <div class="col-7 p-2 card theme-primary">
                         <strong>Narrador:</strong>
                         Você chega na guilda e vai até a <br>recepcionista para se registrar.
                     </div>
                 </div>
             
                 <!-- MISSÃO -->
-                <div class="row">
+                <div class="row p-4">
                     <div class="col-2"></div>
-                    <div class="col-7 m-2 card theme-primary text-end">
+                    <div class="col-7 p-2 card theme-primary text-end">
                         <strong>Recepcionista:</strong>
                         Cadastre seu personagem com nome<br> e nível na tabela aventureiro.
                     </div>
@@ -46,7 +48,7 @@
                 </div>
 
                 <!-- DICA -->
-                <div class="row">
+                <div class="row p-4">
                     <div class="col-2 text-end">
                         <img width="50" height="50" class="mt-4" src="{{ url_for('static', filename='narrador.png') }}"/>
                     </div>
@@ -56,19 +58,19 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5">
-                <form method="POST" action="/registrar_aventureiro" class="row">
+            <div class="col-5 p-8">
+                <form method="POST" action="/registrar_aventureiro" class="row mb-4">
                     <textarea class="form-control mt-3" name="sql" rows="8" placeholder="Digite seu SQL aqui..." >{{ sql or '' }}</textarea>
                     <button class="theme-success btn-solid mt-3" type="submit">Executar</button>
                 </form>
                 <!-- MENSAGEM DE ERRO/SUCESSO -->
                 {% if mensagem %}
                     {% if sucesso %}
-                        <div class="alert theme-success m-2" role="alert">
+                        <div class="alert theme-success p-2" role="alert">
                             <p>{{mensagem}}</p>
                         </div>
                     {% else %}
-                        <div class="alert theme-warning m-2" role="alert">
+                        <div class="alert theme-warning p-2" role="alert">
                             <p>{{mensagem}}</p>
                         </div>
                     {% endif %}
