@@ -16,13 +16,13 @@
 </head>
 <body>
 <main 
-    class="container min-vh-100" 
-    style="background-image: url('{{ url_for('static',filename='background.jpg') }}'); background-size: cover;">
+    class="container">
     <section class="painel">
         <div class="row">
 
             <!-- DIÁLOGOS -->
-            <div class="col-6 p-4">
+            <div class="col-6 p-4 min-vh-100" 
+                style="background-image: url('{{ url_for('static',filename='dialogo.jpg') }}'); background-size: cover;">
 
                 <!-- CONTEXTO -->
                 <div class="row p-4">
@@ -58,7 +58,9 @@
                     </div>
                 </div>
             </div>
-            <div class="col-5 p-8">
+
+            <div class="col-5 p-8"min-vh-100" 
+                style="background-image: url('{{ url_for('static',filename='painel_sql.jpg') }}'); background-size: cover;">
                 <form method="POST" action="/registrar_aventureiro" class="row mb-4">
                     <textarea class="form-control mt-3" name="sql" rows="8" placeholder="Digite seu SQL aqui..." >{{ sql or '' }}</textarea>
                     <button class="theme-success btn-solid mt-3" type="submit">Executar</button>
