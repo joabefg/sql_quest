@@ -60,7 +60,8 @@ def executar_select(sql):
             "registro_aventureiro.html",
             sql=sql,
             colunas=colunas,
-            dados=dados
+            dados=dados,
+            mensagem="👍 Sua consulta retornou dados."
         )
     except Exception as erro:
         return render_template(

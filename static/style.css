@@ -9,3 +9,33 @@
 div, h1, h2, h3, h4, h5, h6 {
   --fonte-titulo: 'Alagard', sans-serif;
 }
+
+.bg-adaptavel {
+    background-size: cover;      /* Força a imagem a preencher a div adaptando a largura */
+    background-position: center; /* Mantém o foco da imagem centralizado */
+    background-repeat: no-repeat; /* Evita que a imagem fique se duplicando */
+    min-height: 300px;           /* Defina uma altura mínima, pois divs com background precisam de altura ou conteúdo interno */
+}
+
+.dialogo {
+  background-size: cover;
+  padding: 10px !important; 
+  color: #000;
+}
+
+.formsql {
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.sqlbox {
+    background-color: #664330;
+    border: 1px solid #664330;
+    border-radius: 15;
+    color: #ffffff; 
+}
+.sqlbox:focus {
+    background-color: #664330;
+    border: 1px solid #664330;
+}
