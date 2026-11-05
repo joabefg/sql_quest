@@ -1,10 +1,6 @@
 from flask import Flask, render_template, request
-from banco import conectar
-from validacoes import (
-    eh_select,
-    validar_select,
-    validar_cadastro
-)
+import banco
+import validacoes
 app = Flask(__name__)
 
 @app.route("/")
@@ -19,43 +15,28 @@ def registro_aventureiro():
 def registrar_aventureiro():
     sql = request.form["sql"].strip()
 
-    # coloca depois
     if not sql:
         return render_template(
             "registro_aventureiro.html",
             mensagem="❌ Digite um comando SQL."
         )
     
-    # coloca depois
-    if eh_select(sql):
+    if validacoes.eh_select(sql):
         return executar_select(sql)
 
-    valido, mensagem = validar_cadastro(sql)
-    # coloca sem mensagem, depois explica que não tem como o usuário saber o que vai acontecer aí faz o validar cadastro
-    # coloca sem o sql, depois explica como é frustrante ficar redigitando aí coloca o sql
+    valido, mensagem = validacoes.validar_cadastro(sql)
     if not valido:
         return render_template(
             "registro_aventureiro.html",
             sql=sql,
             mensagem=mensagem
         )
-
-
     return executar_insert(sql)
 
 def executar_select(sql):
 
     try:
-        banco = conectar()
-        cursor = banco.cursor()
-        cursor.execute(sql)
-        dados = cursor.fetchall()
-        colunas = [
-            coluna[0]
-            for coluna in cursor.description
-        ]
-        cursor.close()
-        banco.close()
+        colunas, dados = banco.executar_select(sql)
         return render_template(
             "registro_aventureiro.html",
             sql=sql,
@@ -72,14 +53,9 @@ def executar_select(sql):
 
 def executar_insert(sql):
     try:
-        banco = conectar()
-        cursor = banco.cursor()
-        cursor.execute(sql)
-        banco.commit()
-        cursor.close()
-        banco.close()
+        banco.executar_insert(sql)
         return render_template(
-            "consulta_classe.html",
+            "registro_aventureiro.html",
             mensagem=(
                 "Aventureiro cadastrado com sucesso!"
             ),
@@ -94,6 +70,78 @@ def executar_insert(sql):
             )
         )
 
+# GUILDA
+@app.route("/guilda")
+def consulta_aventureiro():
+    return render_template("guilda.html")
+
+@app.route("/consulta_guilda", methods=["POST"])
+def consultar_aventureiro():
+    sql = request.form["sql"].strip()
+    if not sql:
+        return render_template(
+            "guilda.html",
+            mensagem="❌ Digite um comando SQL."
+        )
+    valido, mensagem = validacoes.validar_select(sql)
+    if not valido:
+        return render_template(
+            "contratacao.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    valido, mensagem = validacoes.(sql)
+    if not valido:
+        return render_template(
+            "guilda.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    try:
+        print(sql)
+        colunas, dados = banco.executar_select(sql)
+        print(colunas)
+        print(dados)
+        return render_template(
+            "guilda.html",
+            sql=sql,
+            colunas=colunas,
+            dados=dados,
+            mensagem="👍 Sua consulta retornou dados.",
+            sucesso=True
+        )
+    except Exception as erro:
+        return render_template(
+            "guilda.html",
+            sql=sql,
+            mensagem=f"❌ Erro no SQL: {erro}"
+        )
+
+# CONTRATAÇÃO
+@app.route("/contratacao")
+def contratacao():
+    return render_template("contratacao.html")
+
+@app.route("/contratar_guilda", methods=["POST"])
+def contratar_guilda():
+    sql = request.form["sql"].strip()
+    if not sql:
+        return render_template(
+            "registro_aventureiro.html",
+            mensagem="❌ Digite um comando SQL."
+        )
+    
+    if validacoes.eh_select(sql):
+        return executar_select(sql)
+
+    valido, mensagem = validacoes.validar_cadastro(sql)
+    if not valido:
+        return render_template(
+            "registro_aventureiro.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    return executar_insert(sql)
 
 # =========================================
 # INICIAR SERVIDOR

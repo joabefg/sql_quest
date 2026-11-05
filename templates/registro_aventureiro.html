@@ -19,9 +19,20 @@
                 <!-- DIÁLOGOS -->
                 <div class="col-6 p-4 min-vh-100 container-fluid bg-adaptavel"
                     style="background-image: url('{{ url_for('static',filename='l-panel.jpg') }}'); background-size: cover;">
+                    <!--
                     <div class="logo text-center m-5">
                         <img src="{{ url_for('static',filename='logo.png') }}" width="350" height="150" />
+                    </div>-->
+                    <div class="row" style="color: darkblue;">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <h1>
+                                <img src="{{ url_for('static', filename='quest.png') }}" width="50" height="50">01: O início. 
+                                <img src="{{ url_for('static', filename='swordshield.png') }}" width="50" height="50"> SQLDungeon
+                            </h1>
+                        </div>
                     </div>
+                    
                     <!-- CONTEXTO -->
                     <div class="row p-4">
                         <div class="col-2 text-end">
@@ -31,8 +42,13 @@
                         </div>
                         <div class="col-7 p-2  theme-primary dialogo"
                             style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
-                            Você chega na guilda e vai até a <br>recepcionista para se registrar.
+                            Olá Aventureiro. Humanos são raros por estas bandas. Antes de sair para a aventura
+                            você deveria se cadastrar na Guilda dos Aventureiros com a Recepcionista que está logo alí.
                         </div>
+                        <div class="text-center mt-4 text-dark" style="color: black">
+                            Você se dirige até o balcão da Recepcionista.
+                        </div>
+
                     </div>
 
                     <!-- MISSÃO -->
@@ -40,7 +56,8 @@
                         <div class="col-2"></div>
                         <div class="col-7 p-2 theme-primary text-end dialogo"
                             style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
-                            Cadastre seu personagem com nome<br> e nível na tabela aventureiro.
+                            Olá jovem aventureiro, para se cadastrar na Guilda dos Aventureiros insira
+                            seu nome no campo <strong>nome</strong> da tabela <strong>aventureiro</strong>.
                         </div>
                         <div class="col-2 text-start">
                             <img width="50" height="50" class="mt-4"
@@ -50,16 +67,48 @@
                     </div>
 
                     <!-- DICA -->
+                    <div class="text-center m-2 text-dark" style="color: black">
+                        Dicas do Professor:
+                    </div>
                     <div class="row p-4">
                         <div class="col-2 text-end">
                             <img width="50" height="50" class="mt-4"
                                 src="{{ url_for('static', filename='narrador.png') }}" /><br>
-                            <strong style="color: #000">Narrador</strong>
+                            <strong style="color: #000">Professor</strong>
                         </div>
                         <div class="col-7 m-2 theme-primary dialogo"
                             style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
-                            <strong>DICA:</strong>
-                            INSERT INTO tabela (atributo) VALUES (valor);
+                            Bancos de dados servem para armazenar e consultar dados, então antes de
+                            consultar qualquer coisa, precisamos primeiro inserir dados nas tabelas
+                            do banco de dados.
+                        </div>
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='narrador.png') }}" /><br>
+                            <strong style="color: #000">Professor</strong>
+                        </div>
+                        <div class="col-7 m-2 theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            O comando <strong>INSERT</strong> é usado para inserir novas informações.
+                            Para usá-lo precisamos saber o nome da tabela, dos campos e dos valores a ser inserido.
+                            A estrutura básica do comando é: <br>
+                            <strong>INSERT INTO tabela (campo1, campo2) VALUES (valor1, valor2);</strong>
+                        </div>
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='narrador.png') }}" /><br>
+                            <strong style="color: #000">Professor</strong>
+                        </div>
+                        <div class="col-7 m-2 theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            Textos são envolvidos por aspas duplas para indicar que são textos.
+                            Caso fosse inserir a classe, seria da forma abaixo, use como modelo para
+                            ajudar a inserir seu nome de aventureiro: <br>
+                            <strong>INSERT INTO classe (tipo) VALUES ("Humano");</strong>
                         </div>
                     </div>
                 </div>
@@ -73,26 +122,41 @@
                                 <textarea class="form-control mt-3 sqlbox" name="sql" rows="4"
                                     placeholder="Digite seu SQL aqui...">{{ sql or '' }}</textarea>
                             </div>
-                            <div class="col-2"></div>
-                            <!-- MENSAGEM DE ERRO/SUCESSO -->
-                            <div class="col-6 mt-5 d-flex">
-                                {% if mensagem %}
-                                <div class="col-2 text-end">
-                                    <img width="50" height="50" class="m-4"
-                                        src="{{ url_for('static', filename='narrador.png') }}" /><br>
-                                    <strong style="color: #000">Narrador</strong>
-                                </div>
-                                <div class="col-10 p-2 m-4 theme-primary dialogo"
-                                    style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
-                                    <p>{{mensagem}}</p>
-                                </div>
-                                {% endif %}
-                            </div>
-                            <div class="col-2 mt-5">
+                            <div class="text-center mt-5">
                                 <button class="btn btn-custom-bg text-dark fw-bold" type="submit"
                                     style="background-color: #D68A32; border: 2px solid #FFF">Executar</button>
                             </div>
-                            <div class="col-2"></div>
+                            <!-- MENSAGEM DE ERRO/SUCESSO -->
+                            {% if mensagem %}
+                            <div class="row mt-5 d-flex">
+                                <div class="col-2 text-end">
+                                    <img width="50" height="50" class="m-4"
+                                        src="{{ url_for('static', filename='narrador.png') }}" /><br>
+                                    <strong style="color: #000">Mago</strong>
+                                </div>
+                                <div class="col-8 p-2 m-4 theme-primary dialogo"
+                                    style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                                    <p>{{mensagem}}</p>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if sucesso %} 
+                            <div class="row mt-5 d-flex">  
+                                   
+                                <div class="col-2 text-end">
+                                    <img width="50" height="50" class="m-4"
+                                        src="{{ url_for('static', filename='narrador.png') }}" /><br>
+                                    <strong style="color: #000">Mago</strong>
+                                </div>
+                                <div class="col-8 p-2 m-4 theme-primary dialogo"
+                                    style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                                    <p>Parabéns aventureiro, agora você faz parte da Guilda dos Aventureiros.
+                                        Clique no link abaixo para ir para a próxima fase:
+                                        <a href="/guilda">Fase 02</a>
+                                    </p>
+                                </div>
+                            </div>
+                            {% endif %}
                         </form>
                     </div>
                     {% if dados is defined %}
@@ -114,7 +178,7 @@
                                     {% for linha in dados %}
                                     <tr style="background-color: #FFF">
                                         {% for valor in linha %}
-                                        <td  style="background-color: #FFF">
+                                        <td>
                                             {{ valor }}
                                         </td>
                                         {% endfor %}
@@ -131,7 +195,28 @@
                     </div>
                     {% endif %}
 
+                    <!-- tabelas -->
+                    <div class="text-center">
+                        <h2>Tabelas do Reino</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-2"></div>
+                        <div class="col-8">
+                            <ul class="list-group">
+                                <li class="list-group-item">⚔️ aventureiro: Guarda o nome de todos os aventureiros.</li>
+                                <li class="list-group-item">🛡️ quests: Guarda todas as quests da Guilda dos
+                                    Aventureiros.</li>
+                                <li class="list-group-item">🍗 inventario: Guarda os itens que cada aventureiro possui.
+                                </li>
+                                <li class="list-group-item">👾 boss: Livro de informações sobre os inimigos.</li>
+                            </ul>
+                        </div>
+                        <div class="col-2"></div>
+                    </div>
+
+
                 </div>
+
             </div>
 
 

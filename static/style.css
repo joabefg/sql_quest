@@ -1,9 +1,14 @@
+
 @font-face {
-  font-family: 'Alagard';
-  src: url('alagard.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
+    font-family: 'Alagard';
+    src: url('/static/alagard.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+body {
+    font-family: 'Alagard', sans-serif;
 }
 
 div, h1, h2, h3, h4, h5, h6 {

@@ -76,3 +76,26 @@ def validar_registro_aventureiro(sql):
         return False, ("❌ Você precisa informar o nome.")
 
     return True, "SQL básico correto!"
+
+# FASE 02: CONSULTAR O HERÓI
+def validar_registro_aventureiro(sql):
+    sql = sql.lower()
+    
+    if "aventureiro" not in sql:
+        return False, ("❌ Você precisa consultar na tabela aventureiro.")
+
+    return True, "SQL básico correto!"
+
+def validar_guilda(sql):
+    sql = sql.lower()
+
+    if "*" not in sql:
+        return False, ("❌ Para esta primeira consulta, use o * para trazer todos os registros.")
+        
+    if "guilda" not in sql:
+        return False, ("❌ Você precisa consultar na tabela guilda.")
+    
+    return True, "SQL básico correto!"
+
+def validar_contratacao(sql):
+    
