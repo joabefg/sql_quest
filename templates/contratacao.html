@@ -27,7 +27,7 @@
                         <div class="col-2"></div>
                         <div class="col-8">
                             <h1>
-                                <img src="{{ url_for('static', filename='quest.png') }}" width="50" height="50">03: Contratação. 
+                                <img src="{{ url_for('static', filename='quest.png') }}" width="50" height="50">04: Contratação. 
                                 <img src="{{ url_for('static', filename='swordshield.png') }}" width="50" height="50"> SQLDungeon
                             </h1>
                         </div>
@@ -102,7 +102,7 @@
                         <div class="col-7 m-2 theme-primary dialogo"
                             style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
                             Caso fosse inserir a sua classe, seria da forma abaixo, use para te ajudar a inserir a gulda: <br>
-                            <strong>UPDATE aventureiro SET classe = "1" WHERE nome == "Link";</strong>
+                            <strong>UPDATE aventureiro SET classe_fk = 1 WHERE nome = "Link";</strong>
                         </div>
                     </div>
                 </div>
@@ -110,7 +110,7 @@
                 <div class="col-6 p-8 min-vh-100"
                     style="background-image: url('{{ url_for('static',filename='book.png') }}'); background-size: cover;">
                     <div class="formsql">
-                        <form method="POST" action="/contratar"
+                        <form method="POST" action="/contratacao"
                             class="row justify-content-center align-items-center">
                             <div class="col-11 mb-10">
                                 <textarea class="form-control mt-3 sqlbox" name="sql" rows="4"
@@ -144,10 +144,9 @@
                                 </div>
                                 <div class="col-8 p-2 m-4 theme-primary dialogo"
                                     style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
-                                    <p>Parabéns aventureiro, agora você sabe quais as guildas disponíveis.
-                                        Guarde o número da Guilda com status CONTRATANDO pois é a única que você pode entrar.
+                                    <p>Parabéns aventureiro, agora você está pronto para se aventurar.
                                         Clique no link abaixo para ir para a próxima fase:
-                                        <a href="/contratacao">Fase 03</a>
+                                        <a href="/delete">Fase 05</a>
                                     </p>
                                 </div>
                             </div>

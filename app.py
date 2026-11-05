@@ -22,7 +22,7 @@ def registrar_aventureiro():
         )
     
     if validacoes.eh_select(sql):
-        return executar_select(sql)
+        return executar_select(sql, "registro_aventureiro.html")
 
     valido, mensagem = validacoes.validar_cadastro(sql)
     if not valido:
@@ -33,12 +33,12 @@ def registrar_aventureiro():
         )
     return executar_insert(sql)
 
-def executar_select(sql):
+def executar_select(sql, view):
 
     try:
         colunas, dados = banco.executar_select(sql)
         return render_template(
-            "registro_aventureiro.html",
+            view,
             sql=sql,
             colunas=colunas,
             dados=dados,
@@ -46,7 +46,7 @@ def executar_select(sql):
         )
     except Exception as erro:
         return render_template(
-            "registro_aventureiro.html",
+            view,
             sql=sql,
             mensagem=f"❌ Erro no SQL: {erro}"
         )
@@ -90,7 +90,7 @@ def consultar_aventureiro():
             sql=sql,
             mensagem=mensagem
         )
-    valido, mensagem = validacoes.(sql)
+    valido, mensagem = validacoes.validar_guilda(sql)
     if not valido:
         return render_template(
             "guilda.html",
@@ -117,31 +117,154 @@ def consultar_aventureiro():
             mensagem=f"❌ Erro no SQL: {erro}"
         )
 
+# GUILDA CONTRATANTE
+@app.route("/guilda_contratante")
+def guilda_contratando():
+    return render_template("guilda_contratante.html")
+
+@app.route("/consulta_guilda_contratante", methods=["POST"])
+def consultar_guilda_contratando():
+    sql = request.form["sql"].strip()
+    if not sql:
+        return render_template(
+            "guilda_contratante.html",
+            mensagem="❌ Digite um comando SQL."
+        )
+    valido, mensagem = validacoes.validar_select(sql)
+    if not valido:
+        return render_template(
+            "guilda_contratante.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    valido, mensagem = validacoes.validar_guilda_contratante(sql)
+    if not valido:
+        return render_template(
+            "guilda_contratante.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    try:
+        print(sql)
+        colunas, dados = banco.executar_select(sql)
+        print(colunas)
+        print(dados)
+        return render_template(
+            "guilda_contratante.html",
+            sql=sql,
+            colunas=colunas,
+            dados=dados,
+            mensagem="👍 Sua consulta retornou dados.",
+            sucesso=True
+        )
+    except Exception as erro:
+        return render_template(
+            "guilda_contratante.html",
+            sql=sql,
+            mensagem=f"❌ Erro no SQL: {erro}"
+        )
+
 # CONTRATAÇÃO
-@app.route("/contratacao")
+@app.route("/contratacao", methods=["GET"])
 def contratacao():
     return render_template("contratacao.html")
 
-@app.route("/contratar_guilda", methods=["POST"])
+@app.route("/contratacao", methods=["POST"])
 def contratar_guilda():
     sql = request.form["sql"].strip()
     if not sql:
         return render_template(
-            "registro_aventureiro.html",
+            "contratacao.html",
             mensagem="❌ Digite um comando SQL."
         )
     
     if validacoes.eh_select(sql):
-        return executar_select(sql)
+        return executar_select(sql, "contratacao.html")
 
-    valido, mensagem = validacoes.validar_cadastro(sql)
+    valido, mensagem = validacoes.validar_update(sql)
     if not valido:
         return render_template(
-            "registro_aventureiro.html",
+            "contratacao.html",
             sql=sql,
             mensagem=mensagem
         )
-    return executar_insert(sql)
+
+    valido, mensagem = validacoes.validar_contratacao(sql)
+    if not valido:
+        return render_template(
+            "contratacao.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    
+    try:
+        banco.executar_insert(sql)
+        return render_template(
+            "contratacao.html",
+            mensagem=(
+                "Aventureiro atualizado com sucesso!"
+            ),
+            sucesso=True
+        )
+    except Exception as erro:
+        return render_template(
+            "contratacao.html",
+            sql=sql,
+            mensagem=(
+                f"❌ O banco recusou o SQL: {erro}"
+            )
+        )
+
+@app.route("/delete", methods=["GET"])
+def view_delete():
+    return render_template("boss.html")
+
+@app.route("/delete", methods=["POST"])
+def deletar():
+    sql = request.form["sql"].strip()
+
+    if not sql:
+        return render_template(
+            "boss.html",
+            mensagem="❌ Digite um comando SQL."
+        )
+    
+    if validacoes.eh_select(sql):
+        return executar_select(sql, "boss.html")
+
+    valido, mensagem = validacoes.validar_delete(sql)
+    if not valido:
+        return render_template(
+            "boss.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+
+    valido, mensagem = validacoes.validar_batalha(sql)
+    if not valido:
+        return render_template(
+            "boss.html",
+            sql=sql,
+            mensagem=mensagem
+        )
+    
+    try:
+        banco.executar_insert(sql)
+        return render_template(
+            "boss.html",
+            mensagem=(
+                "Aventureiro atualizado com sucesso!"
+            ),
+            sucesso=True
+        )
+    except Exception as erro:
+        return render_template(
+            "boss.html",
+            sql=sql,
+            mensagem=(
+                f"❌ O banco recusou o SQL: {erro}"
+            )
+        )
 
 # =========================================
 # INICIAR SERVIDOR
