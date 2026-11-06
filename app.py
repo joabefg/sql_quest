@@ -7,7 +7,7 @@ app = Flask(__name__)
 def inicio():
     return render_template("index.html")
 
-@app.route("/registro_aventureiro")
+@app.route("/registro_aventureiro", methods=["GET"])
 def registro_aventureiro():
     return render_template("registro_aventureiro.html")
 
@@ -202,7 +202,7 @@ def contratar_guilda():
         return render_template(
             "contratacao.html",
             mensagem=(
-                "Aventureiro atualizado com sucesso!"
+                "Parabéns aventureiro! Você foi contratado por uma Guilda."
             ),
             sucesso=True
         )
@@ -253,7 +253,7 @@ def deletar():
         return render_template(
             "boss.html",
             mensagem=(
-                "Aventureiro atualizado com sucesso!"
+                "Inimigo foi eliminado com sucesso! Parabéns bravo herói!"
             ),
             sucesso=True
         )

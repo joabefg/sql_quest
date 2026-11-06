@@ -1,38 +1,155 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>SQL RPG</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-</head>
-<body>
-    <main class="container">
-        <p class="introducao">
-            Bem-vindo, aventureiro!
-        </p>
-        <p>
-            O reino precisa de novos heróis.
-            Antes de começar sua aventura,
-            você precisa se cadastrar em uma guilda.
-        </p>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@6.0.0-alpha.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-B/GM4XqrwHnWXNOWMbloTmrYXZg10cakYGmpfsR/bbzQ6JAJI4ihuyADKLnBgrCe" crossorigin="anonymous">
 
-        <div class="historia">
-            <p>
-                👑 O Rei está procurando aventureiros
-                capazes de enfrentar perigos,
-                explorar masmorras e salvar o reino.
-            </p>
-            <p>
-                Para começar, você deverá aprender
-                a conversar com o banco de dados
-                utilizando SQL.
-            </p>
-        </div>
-        <a href="/registro_aventureiro">
-            <button>
-                ⚔️ Começar aventura
-            </button>
-        </a>
+</head>
+
+<body>
+    <main class="container-fluid">
+        <section class="painel">
+            <div class="row">
+
+                <!-- DIÁLOGOS -->
+                <div class="col-6 p-4 min-vh-100 container-fluid bg-adaptavel"
+                    style="background-image: url('{{ url_for('static',filename='l-panel.jpg') }}'); background-size: cover;">
+                    <!--
+                    <div class="logo text-center m-5">
+                        <img src="{{ url_for('static',filename='logo.png') }}" width="350" height="150" />
+                    </div>-->
+                    <div class="row" style="color: darkblue;">
+                        <div class="col-1"></div>
+                        <div class="col-9">
+                            <h1>
+                                <img src="{{ url_for('static', filename='swordshield.png') }}" width="50" height="50">
+                                SQLDungeon
+                            </h1>
+                        </div>
+                    </div>
+
+                    <!-- CONTEXTO -->
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='guarda.png') }}" /><br>
+                            <strong style="color: #000">Guarda</strong>
+                        </div>
+                        <div class="col-7 p-2  theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            Olá Aventureiro. Humanos são raros por estas bandas.
+                            Este reino recebe aventureiros de toda parte do mundo querendo provar a sua força.
+                        </div>
+
+                    </div>
+
+                    <!-- MISSÃO -->
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='guarda.png') }}" /><br>
+                            <strong style="color: #000">Guarda</strong>
+                        </div>
+                        <div class="col-7 p-2  theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            Mas tudo aqui é feito por comando SQL no banco de dados.
+                            Mas não se preocupe, iremos ajudá-lo nessa jornada
+                        </div>
+                    </div>
+
+                    <!-- DICA -->
+                    <div class="text-center m-2 text-dark" style="color: black">
+                        Dicas do Professor:
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='professor.png') }}" /><br>
+                            <strong style="color: #000">Professor</strong>
+                        </div>
+                        <div class="col-7 m-2 theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            Neste lado esquero estarão os diálogos para orientá-lo na sua jornada.
+                        </div>
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='professor.png') }}" /><br>
+                            <strong style="color: #000">Professor</strong>
+                        </div>
+                        <div class="col-7 m-2 theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            do lado direito em cima, haverá um espaço para digitar os comandos SQL.
+                        </div>
+                    </div>
+                    <div class="row p-4">
+                        <div class="col-2 text-end">
+                            <img width="50" height="50" class="mt-4"
+                                src="{{ url_for('static', filename='professor.png') }}" /><br>
+                            <strong style="color: #000">Professor</strong>
+                        </div>
+                        <div class="col-7 m-2 theme-primary dialogo"
+                            style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                            Em baixo dele está listadas as tabelas do banco de dados.
+                            Também aparecerá ali o resultado das consultas.
+                            Boa sorte na sua aventura, e qualquer dúvida busque o professor ou um aluno para auxiliá-lo.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6 p-8 min-vh-100"
+                    style="background-image: url('{{ url_for('static',filename='book.png') }}'); background-size: cover;">
+                    <div class="formsql">
+                        <form method="POST" "
+                            class=" row justify-content-center align-items-center">
+                            <div class="col-11 mb-10">
+                                <textarea class="form-control mt-3 sqlbox" name="sql" rows="4"
+                                    placeholder="Digite seu SQL aqui...">{{ sql or '' }}</textarea>
+                            </div>
+                            <div class="text-center mt-5">
+                                <button class="btn btn-custom-bg text-dark fw-bold" type="submit"
+                                    style="background-color: #D68A32; border: 2px solid #FFF">Executar</button>
+                            </div>
+                            <!-- MENSAGEM DE ERRO/SUCESSO -->
+                            <div class="row mt-5 d-flex">
+
+                                <div class="col-2 text-end">
+                                    <img width="50" height="50" class="m-4"
+                                        src="{{ url_for('static', filename='mago.png') }}" /><br>
+                                    <strong style="color: #000">Mago</strong>
+                                </div>
+                                <div class="col-8 p-2 m-4 theme-primary dialogo"
+                                    style="background-image: url('{{ url_for('static',filename='balao.png') }}');">
+                                    <p>Esta é apenas a tela de boas vindas, clique no botão abaixo para iniciar sua
+                                        aventura. Clique no link abaixo para começar.
+                                        Boa Sorte!<br>
+                                        <a href="/registro_aventureiro">
+                                                ⚔️ Começar aventura
+                                        </a>
+                                    </p>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+
     </main>
 </body>
+
 </html>
